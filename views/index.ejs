@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <script>
+
+    </script>
+
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="javascripts/controller.js"></script>
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+    <script>
+       UPSApp.directive('linearChart', function($parse, $window){
+return{
+restrict:'EA',
+template:"<svg width='900' height='200'></svg>",
+link: function(scope, elem, attrs){
+var exp = $parse(attrs.chartData);
+
+
+var salesDataToPlot=exp(scope);
+var padding = 10;
+var padding = 10;
+var padding = 10;
+var pathClass="path";
+var xScale, yScale, xAxisGen, yAxisGen, lineFun;
+
+var d3 = $window.d3;
+var rawSvg=elem.find('svg');
+var svg = d3.select(rawSvg[0]);
+
+
+/*
+To update the chart as soon as the new data is pushed,
+we need to redraw the chart with updated data. A
+collection watcher has to be used in the directive to
+watch the changes on the collection data. The watcher
+is invoked when any change is made to the collection.
+The chart is redrawn in the watcher.
+*/
+scope.$watchCollection(exp, function(newVal, oldVal){
+salesDataToPlot=newVal;
+redrawLineChart();
+});
+
+
+
+function setChartParameters(){
+xScale = d3.scale.linear()
+.domain([salesDataToPlot[0].hour, salesDataToPlot[salesDataToPlot.length-1].hour])
+.range([padding -5, rawSvg.attr("width") - padding]);
+
+yScale = d3.scale.linear()
+.domain([230, d3.max(salesDataToPlot, function (d) {//setting min value to be charted in chart
+return 350;//setting scale of max values within the domain of  graph chart
+})])
+.range([rawSvg.attr("height") - padding, 0]);
+xAxisGen = d3.svg.axis()
+.scale(xScale)
+.orient("bottom")
+//.ticks(salesDataToPlot.length - 1);
+
+yAxisGen = d3.svg.axis()
+.scale(yScale)
+.orient("left")
+.ticks(50);
+
+lineFun = d3.svg.line()
+.x(function (d) {
+return xScale(d.hour);
+})
+.y(function (d) {
+return yScale(d.sales);
+})
+.interpolate("basis");
+}
+
+function drawLineChart() {
+setChartParameters();
+
+svg.append("svg:g")
+.attr("class", "x axis")
+.attr("transform", "translate(-10,179)")
+.call(xAxisGen);
+
+svg.append("svg:g")
+.attr("class", "y axis")
+.attr("transform", "translate(5,-5)")
+.call(yAxisGen);
+
+svg.append("svg:path")
+.attr({
+d: lineFun(salesDataToPlot),
+"stroke": "black",
+"stroke-width": 4,
+"fill": "none",
+"class": pathClass
+});
+}
+
+function redrawLineChart() {
+setChartParameters();
+svg.selectAll("g.y.axis").call(yAxisGen);
+svg.selectAll("g.x.axis").call(xAxisGen);
+svg.selectAll("."+pathClass)
+.attr({
+d: lineFun(salesDataToPlot)
+});
+}
+drawLineChart();
+}
+};
+});</script>
+
+</head>
+
+
+
+
+
+
+
+
+
+<h1 align="center"><img src="images/image5.jpg" align="center"></h1>
+
+
+<body ng-app="UPSApp" ng-controller="UPSController">
+
+
+    <div class="row">
+        <div class="col-sm-6 col-md-4">
+
+            <div class="thumbnail">
+
+                <div class="caption bg-danger">
+                    <h3>The UPS battery run time remaining before battery
+                        exhaustion.</h3>
+                    <h1> {{users4}}</h1>
+                    <p>Displayed in timeticks</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+
+                <div class="caption bg-danger">
+                    <h3>
+                        Current live voltage feed of UPS device displayed here.</h3>
+                    <h1> {{users2}}</h1>
+                    <p>Displayed in tenths of Volts</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<div class="text-center"><h3><abbr title="  The actual battery bus voltage, expressed in tenths of Volts.">
+            Current live feed of Internal voltage of UPS device is displayed below </abbr> </h3></div>
+<div  linear-chart chart-data="salesData"></div>
+
+
+
+<h6></h6>
+    <div class="row">
+        <div class="col-sm-6 col-md-4">
+
+            <div class="thumbnail">
+
+                <div class="caption bg-danger">
+                    <h3>The UPS battery run time remaining before battery
+                        exhaustion.</h3>
+                    <h1> {{users4}}</h1>
+                    <p>Displayed in timeticks</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+
+                <div class="caption bg-danger">
+                    <h3>
+                        Current live voltage feed of UPS device displayed here.</h3>
+                    <h1> {{users}}</h1>
+                    <p>Displayed in tenths of Volts</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="text-center"><h3><abbr title=" The current internal UPS temperature expressed in
+tenths of degrees Celsius. Overheating of UPS devices are a fundamental
+concern in more hot climates"> Internal Temp of UPS displayed below </abbr></h3></div>
+    <div linear-chart chart-data="salesData2"></div>
+
+
+    <h6></h6>
+
+
+<div class="text-center"><h3><abbr title="Periodic Read over the past 36 hours. Overheating of UPS devices are a fundamental
+concern in more hot environments">Periodic Internal Temp of UPS is: </abbr></h3></div>
+<div linear-chart chart-data="salesData3"></div>
+
+
+</body>
+</html>
+
+

@@ -1,0 +1,22 @@
+body {
+  padding: 60px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+}
+body {
+  font-family: "Times New Roman", Times, serif;
+  font-style: oblique;
+}
+
+#header {
+  background-color:white;
+  color:black;
+  text-align:center;
+  padding:5px;
+  font: 35px "Lucida Grande";
+}
+
+h6{
+  padding: 100px;
+
+}
