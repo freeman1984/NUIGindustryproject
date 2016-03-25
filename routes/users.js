@@ -7,3 +7,9 @@ router.get('/', function(req, res, next) {
 });
 
 module.exports = router;
+
+/*
+
+creating the express router and exporting it
+
+ */

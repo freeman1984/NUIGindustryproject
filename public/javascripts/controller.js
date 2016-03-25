@@ -1,3 +1,8 @@
+/*
+
+angular code, sending live data out to the wepbage
+ */
+
 var UPSApp = angular.module('UPSApp', []);
 UPSApp.controller('UPSController', function($scope,$http, $interval) {
 
@@ -33,7 +38,7 @@ UPSApp.controller('UPSController', function($scope,$http, $interval) {
             var temps= data;
             $scope.Data3.push({hour: hour, temps:temps});
         });
-    }, 600000);
+    }, 6000000);
     $interval(function(){
         $http.get('/solution-two/data').success(function (data) {
             var hour=$scope.Data2.length+1;

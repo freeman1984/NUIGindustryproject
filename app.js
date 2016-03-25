@@ -6,11 +6,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var passport = require('passport');
+
 var flash = require('connect-flash');
 
 
-require('./routes/mongo');
 require('./routes/temp');
 var routes = require('./routes/index');
 var users = require('./routes/users');

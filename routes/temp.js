@@ -1,3 +1,9 @@
+
+/*
+saving to database every 1 hour in this module
+ */
+
+
 var express = require('express');
 var snmp = require('snmp-native');
 var mongoose = require('mongoose');
@@ -37,55 +43,3 @@ setInterval (function(){//interval function which allows us to store values ever
 mongoose.models = {temp: Number};
 mongoose.modelSchemas = {temp: Number};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
- app.get('/volt', function (req, res) {
- var session = new snmp.Session({host: '192.168.24.102', port: 161, community: 'public'});
-
- var vb;
- session.get({oid: [1, 3, 6, 1, 4, 1, 318, 1, 1, 1, 2, 2, 8, 0]}, function (err, varbinds) {
- if (err) {
- console.log(err);
- } else {
- vb = varbinds[0];
- console.log('The system description is "' + vb.value + '"');
- }
- successCallback(vb.value);
- session.close();
- res.send(vb.value);
- });
-
- });
- app.listen(3000);
-
-*/
-
-///////////////////////////////////////
-
-/*
- app.get('/', function (req, res) {
- res.send('hello World')
- });
- app.listen(3000);
-
- */
-
-//////////////////////////////////////////
