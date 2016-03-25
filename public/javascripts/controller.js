@@ -19,31 +19,31 @@ UPSApp.controller('UPSController', function($scope,$http, $interval) {
 
 
     $scope.Data=[
-        {hour: 1,sales: 274}
+        {hour: 1,temps: 274}
     ];
     $scope.Data2=[
-        {hour: 1,sales: 333}
+        {hour: 1,temps: 333}
     ];
     $scope.Data3=[
-        {hour: 1,sales: 330}
+        {hour: 1,temps: 330}
     ];
     $interval(function(){//this function is synced with the database
         $http.get('/solution-two/data3').success(function (data) {
             var hour=$scope.Data3.length+1;
-            var sales= data;
-            $scope.Data3.push({hour: hour, sales:sales});
+            var temps= data;
+            $scope.Data3.push({hour: hour, temps:temps});
         });
     }, 600000);
     $interval(function(){
         $http.get('/solution-two/data').success(function (data) {
             var hour=$scope.Data2.length+1;
-            var sales= data;
-            $scope.Data2.push({hour: hour, sales:sales});
+            var temps= data;
+            $scope.Data2.push({hour: hour, temps:temps});
         });
         $http.get('/solution-two/data2').success(function (data) {
             var hour=$scope.Data.length+1;
-            var sales= data;
-            $scope.Data.push({hour: hour, sales:sales});
+            var temps= data;
+            $scope.Data.push({hour: hour, temps:temps});
         });
     }, 1000);
 })
