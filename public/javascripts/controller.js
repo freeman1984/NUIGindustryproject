@@ -12,6 +12,9 @@ UPSApp.controller('UPSController', function($scope,$http, $interval) {
         $http.get('/solution-two/data4').success(function (data) {
             $scope.users4 = data;
         })
+        $http.get('/solution-two/data5').success(function (data) {
+            $scope.users6 = data;//battery capacity
+        })
     },1000);
 
 
@@ -30,7 +33,7 @@ UPSApp.controller('UPSController', function($scope,$http, $interval) {
             var sales= data;
             $scope.Data3.push({hour: hour, sales:sales});
         });
-    }, 60000,60);
+    }, 600000);
     $interval(function(){
         $http.get('/solution-two/data').success(function (data) {
             var hour=$scope.Data2.length+1;
@@ -44,6 +47,5 @@ UPSApp.controller('UPSController', function($scope,$http, $interval) {
         });
     }, 1000);
 })
-
 
 

@@ -25,7 +25,7 @@ link: function(scope, elem, attrs){
 var exp = $parse(attrs.chartData);
 
 
-var salesDataToPlot=exp(scope);
+var DataToPlot=exp(scope);
 var padding = 10;
 var padding = 10;
 var padding = 10;
@@ -46,7 +46,7 @@ is invoked when any change is made to the collection.
 The chart is redrawn in the watcher.
 */
 scope.$watchCollection(exp, function(newVal, oldVal){
-salesDataToPlot=newVal;
+DataToPlot=newVal;
 redrawLineChart();
 });
 
@@ -54,11 +54,11 @@ redrawLineChart();
 
 function setChartParameters(){
 xScale = d3.scale.linear()
-.domain([salesDataToPlot[0].hour, salesDataToPlot[salesDataToPlot.length-1].hour])
+.domain([DataToPlot[0].hour, DataToPlot[DataToPlot.length-1].hour])
 .range([padding -5, rawSvg.attr("width") - padding]);
 
 yScale = d3.scale.linear()
-.domain([230, d3.max(salesDataToPlot, function (d) {//setting min value to be charted in chart
+.domain([230, d3.max(DataToPlot, function (d) {//setting min value to be charted in chart
 return 380;//setting scale of max values within the domain of  graph chart
 })])
 .range([rawSvg.attr("height") - padding, 0]);
@@ -96,7 +96,7 @@ svg.append("svg:g")
 
 svg.append("svg:path")
 .attr({
-d: lineFun(salesDataToPlot),
+d: lineFun(DataToPlot),
 "stroke": "black",
 "stroke-width": 4,
 "fill": "pink",
@@ -110,7 +110,7 @@ svg.selectAll("g.y.axis").call(yAxisGen);
 svg.selectAll("g.x.axis").call(xAxisGen);
 svg.selectAll("."+pathClass)
 .attr({
-d: lineFun(salesDataToPlot)
+d: lineFun(DataToPlot)
 });
 }
 drawLineChart();
@@ -121,6 +121,14 @@ drawLineChart();
 
 
 </head>
+
+
+
+
+
+
+
+
 
 
 
@@ -176,10 +184,9 @@ drawLineChart();
             <div class="thumbnail">
 
                 <div class="caption bg-success">
-                    <h3>The UPS battery run time remaining before battery
-                        exhaustion.</h3>
-                    <h1> {{users4}}</h1>
-                    <p>Displayed in timeticks</p>
+                    <h3>The remaining percent of battery capacity</h3>
+                    <h1> {{users6}}</h1>
+                    <p>Displayed in percent of capacity</p>
                 </div>
             </div>
         </div>
@@ -234,7 +241,7 @@ concern in more hot climates"> Internal Temp of UPS displayed below </abbr></h3>
 <div class="text-center"><h3><abbr title="Periodic Read over the past 36 hours. Overheating of UPS devices are a fundamental
 concern in more hot environments">last 24 hours Internal Temp of UPS is: </abbr></h3></div>
 <div linear-chart chart-data="Data3"></div>
-    <h2 ng-repeat="x in users5"> {{x.temp}}</h2>
+    <h2> {{}}</h2>
 
 </body>
 </html>

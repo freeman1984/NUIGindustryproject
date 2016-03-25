@@ -20,9 +20,9 @@ var snmp = require('snmp-native');
 
 
 
-/*
-below we are sending the data to the console and out to angular also via a http request
- */
+
+//full database connection below
+
 
 mongoose.connect('mongodb://localhost/localhost');
 
@@ -48,11 +48,13 @@ mongoose.modelSchemas = {temp: Number};
 
 
 
+
+//sending out information regarding capacity of battery available
 function foo5 (successCallback) {
     var session = new snmp.Session({host: '192.168.24.102', port: 161, community: 'public'});
 
-    setInterval (function() {
-        session.get({oid: [1, 3, 6, 1, 4, 1, 318, 1, 1, 1, 2, 2, 3, 0]}, function (err, varbinds) {
+    setInterval (function() {//.1.3.6.1.4.1.318.1.1.1.2.2.1.0
+        session.get({oid: [1, 3, 6, 1, 4, 1, 318, 1, 1, 1, 2, 2, 1, 0]}, function (err, varbinds) {
             var vb;
             if (err) {
                 console.log(err);
@@ -73,6 +75,8 @@ app.get('/solution-two/data5', function (req, res) {
         res.json(volt);
     });
 });
+
+
 
 
 function foo4 (successCallback) {
@@ -169,7 +173,7 @@ app.get('/solution-two/data2', function (req, res) {
 
 
 
-
+//sending out periodic data to graph
 
 function foo3 (successCallback) {
     var session = new snmp.Session({host: '192.168.24.102', port: 161, community: 'public'});
@@ -189,6 +193,7 @@ function foo3 (successCallback) {
     },1000);
 };
 
+//sending out periodic data to graph
 
 
 app.get('/solution-two/data3', function (req, res) {
@@ -196,6 +201,9 @@ app.get('/solution-two/data3', function (req, res) {
         res.json(volt);
     });
 });
+
+
+//////////////////////////
 
 
 
