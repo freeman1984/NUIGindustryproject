@@ -10,6 +10,6 @@ module.exports = router;
 
 /*
 
-creating the express router and exporting it
+ creating the express router and exporting it
 
  */

@@ -21,8 +21,6 @@ var snmp = require('snmp-native');
 
 
 //full database connection below
-
-
 mongoose.connect('mongodb://localhost/localhost');
 
 var db = mongoose.connection;
