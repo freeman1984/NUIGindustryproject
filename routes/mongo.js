@@ -25,14 +25,14 @@ mongoose.modelSchemas = {temp: Number};
 
 
 
+
 */
 
 
-
-
-
-
 /*
+
+
+
 var mongoose = require('mongoose');
 
 
@@ -58,5 +58,6 @@ Voltage.save(function (err) {
     if (err)//....
         console.log('Done');
 });
+
 
 */

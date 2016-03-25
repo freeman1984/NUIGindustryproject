@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html >
 <head>
-    <script>
-
-    </script>
-
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="javascripts/controller.js"></script>
@@ -63,7 +59,7 @@ xScale = d3.scale.linear()
 
 yScale = d3.scale.linear()
 .domain([230, d3.max(salesDataToPlot, function (d) {//setting min value to be charted in chart
-return 350;//setting scale of max values within the domain of  graph chart
+return 380;//setting scale of max values within the domain of  graph chart
 })])
 .range([rawSvg.attr("height") - padding, 0]);
 xAxisGen = d3.svg.axis()
@@ -104,7 +100,7 @@ svg.append("svg:path")
 d: lineFun(salesDataToPlot),
 "stroke": "black",
 "stroke-width": 4,
-"fill": "none",
+"fill": "pink",
 "class": pathClass
 });
 }
@@ -123,6 +119,8 @@ drawLineChart();
 };
 });</script>
 
+
+
 </head>
 
 
@@ -132,8 +130,8 @@ drawLineChart();
 
 
 
-
-<h1 align="center"><img src="images/image5.jpg" align="center"></h1>
+<h1 align="center">
+    <img src="images/image3.jpg" align="center" style="margin-bottom: 240px;margin-top: 120px;"></h1>
 
 
 <body ng-app="UPSApp" ng-controller="UPSController">
@@ -178,7 +176,7 @@ drawLineChart();
 
             <div class="thumbnail">
 
-                <div class="caption bg-danger">
+                <div class="caption bg-success">
                     <h3>The UPS battery run time remaining before battery
                         exhaustion.</h3>
                     <h1> {{users4}}</h1>
@@ -189,7 +187,7 @@ drawLineChart();
         <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
 
-                <div class="caption bg-danger">
+                <div class="caption bg-success">
                     <h3>
                         Current live voltage feed of UPS device displayed here.</h3>
                     <h1> {{users}}</h1>
@@ -213,6 +211,105 @@ concern in more hot climates"> Internal Temp of UPS displayed below </abbr></h3>
 concern in more hot environments">Periodic Internal Temp of UPS is: </abbr></h3></div>
 <div linear-chart chart-data="salesData3"></div>
 
+    <h1 ng-repeat="x in users5"> {{x.temp}}</h1>
+    <div linear-chart2 chart-data="salesData4"></div>
+
+
+
+
+
+    <script>
+        UPSApp.directive('linearChart2', function($parse, $window){
+            return{
+                restrict:'EA',
+                template:"<svg width='900' height='200'></svg>",
+                link: function(scope, elem, attrs){
+                    var exp = $parse(attrs.chartData);
+
+
+                    var salesDataToPlot=exp(scope);
+                    var padding = 10;
+                    var padding = 10;
+                    var padding = 10;
+                    var pathClass="path";
+                    var xScale, yScale, xAxisGen, yAxisGen, lineFun;
+
+                    var d3 = $window.d3;
+                    var rawSvg=elem.find('svg');
+                    var svg = d3.select(rawSvg[0]);
+
+                    scope.$watchCollection(exp, function(newVal, oldVal){
+                        salesDataToPlot=newVal;
+                        redrawLineChart();
+                    });
+
+
+
+                    function setChartParameters(){
+                        xScale = d3.scale.linear()
+                                .domain([salesDataToPlot[0].hour, salesDataToPlot[salesDataToPlot.length-1].hour])
+                                .range([padding -5, rawSvg.attr("width") - padding]);
+
+                        yScale = d3.scale.linear()
+                                .domain([230, d3.max(salesDataToPlot, function (d) {//setting min value to be charted in chart
+                                    return 350;//setting scale of max values within the domain of  graph chart
+                                })])
+                                .range([rawSvg.attr("height") - padding, 0]);
+                        xAxisGen = d3.svg.axis()
+                                .scale(xScale)
+                                .orient("bottom")
+
+                        yAxisGen = d3.svg.axis()
+                                .scale(yScale)
+                                .orient("left")
+                                .ticks(50);
+
+                        lineFun = d3.svg.line()
+                                .x(function (d) {
+                                    return xScale(d.hour);
+                                })
+                                .y(function (d) {
+                                    return yScale(d.sales);
+                                })
+                                .interpolate("basis");
+                    }
+
+                    function drawLineChart() {
+                        setChartParameters();
+
+                        svg.append("svg:g")
+                                .attr("class", "x axis")
+                                .attr("transform", "translate(-10,179)")
+                                .call(xAxisGen);
+
+                        svg.append("svg:g")
+                                .attr("class", "y axis")
+                                .attr("transform", "translate(5,-5)")
+                                .call(yAxisGen);
+
+                        svg.append("svg:path")
+                                .attr({
+                                    d: lineFun(salesDataToPlot),
+                                    "stroke": "black",
+                                    "stroke-width": 4,
+                                    "fill": "pink",
+                                    "class": pathClass
+                                });
+                    }
+
+                    function redrawLineChart() {
+                        setChartParameters();
+                        svg.selectAll("g.y.axis").call(yAxisGen);
+                        svg.selectAll("g.x.axis").call(xAxisGen);
+                        svg.selectAll("."+pathClass)
+                                .attr({
+                                    d: lineFun(salesDataToPlot)
+                                });
+                    }
+                    drawLineChart();
+                }
+            };
+        });</script>
 
 </body>
 </html>

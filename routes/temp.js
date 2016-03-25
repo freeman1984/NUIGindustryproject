@@ -1,23 +1,12 @@
-/*
-on this module we will be saving to the database intermitally with values from UPS
-these values will be graphed to the front end webpage
-*/
-
 var express = require('express');
 var snmp = require('snmp-native');
 var mongoose = require('mongoose');
 /////////////////////////
-
-
 mongoose.createConnection('mongodb://localhost/localhost');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
 });
-
-
-
-/////////////////
 
 var getList = function (successCallback) {
     var session = new snmp.Session({host: '192.168.24.102', port: 161, community: 'public'});
@@ -34,9 +23,6 @@ var getList = function (successCallback) {
     });
 };
 
-
-
-
 var voltageModel = mongoose.model('Voltage', {temp: Number});//new mongoose model
 setInterval (function(){//interval function which allows us to store values every 8 seconds
     getList(function(data) {
@@ -46,9 +32,7 @@ setInterval (function(){//interval function which allows us to store values ever
                 console.log('Done');
         });
     });
-}, 600000);//saving to the database every 60 seconds //
-
-
+}, 6000000);//saving to the database every 60 minutes
 
 mongoose.models = {temp: Number};
 mongoose.modelSchemas = {temp: Number};

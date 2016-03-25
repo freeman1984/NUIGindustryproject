@@ -1,10 +1,4 @@
 
-/*
-test comment, couple lines of code in here lads
-blaaaaaaaaaaaaahhhhhhhhhhhh
-more blaaaaaaaaahhhhhhhhh!
-
- */
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -42,7 +36,7 @@ var Voltage = mongoose.model('Voltage', {temp: Number});
 
 
 app.get('/solution-two/data6', function (req, res) {
-    Voltage.find(function (err, data) {
+    Voltage.find().select('-_id -__v').exec(function (err, data) {
         res.json(data);
         console.log(data);
     });
