@@ -188,9 +188,9 @@ drawLineChart();
 
                 <div class="caption bg-success">
                     <h3>
-                        Current live voltage feed of UPS device displayed here.</h3>
+                        Current live temperature feed of UPS device displayed here.</h3>
                     <h1> {{users}}</h1>
-                    <p>Displayed in tenths of Volts</p>
+                    <p>Displayed in tenths of degrees</p>
                 </div>
             </div>
         </div>
@@ -204,6 +204,31 @@ concern in more hot climates"> Internal Temp of UPS displayed below </abbr></h3>
 
 
     <h6></h6>
+    <div class="row">
+        <div class="col-sm-6 col-md-4">
+
+            <div class="thumbnail">
+
+                <div class="caption bg-danger">
+                    <h3>The UPS battery run time remaining before battery
+                        exhaustion.</h3>
+                    <h1> {{users4}}</h1>
+                    <p>Displayed in timeticks</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+
+                <div class="caption bg-danger">
+                    <h3>
+                        Current live voltage feed of UPS device displayed here.</h3>
+                    <h1> {{users2}}</h1>
+                    <p>Displayed in tenths of Volts</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 <div class="text-center"><h3><abbr title="Periodic Read over the past 36 hours. Overheating of UPS devices are a fundamental

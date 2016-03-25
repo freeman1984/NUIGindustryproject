@@ -78,7 +78,7 @@ app.get('/solution-two/data5', function (req, res) {
 function foo4 (successCallback) {
     var session = new snmp.Session({host: '192.168.24.102', port: 161, community: 'public'});
 
-    setInterval (function() {
+    setInterval (function() {//.1.3.6.1.4.1.318.1.1.1.2.2.9.0
         session.get({oid: [1, 3, 6, 1, 4, 1, 318, 1, 1, 1, 2, 2, 3, 0]}, function (err, varbinds) {
             var vb;
             if (err) {
@@ -181,12 +181,12 @@ function foo3 (successCallback) {
                 console.log(err);
             } else {
                 vb = varbinds[0];
-                // console.log('The system Temperature is "' + vb.value + '"');
+                console.log('The system Temperature is "' + vb.value + '"');
             }
             successCallback(vb.value);
             session.close();
         });
-    },6000);
+    },1000);
 };
 
 
@@ -200,27 +200,6 @@ app.get('/solution-two/data3', function (req, res) {
 
 
 
-
-    /*
-
-     app.get('/solution-two/data', function(req,res){
-
-     var users = 5;
-     res.json(users)
-
-     });
-     */
-
-    /*
-     getList(function(data) {
-     var Voltage = new voltageModel({temp:data});
-     Voltage.save(function (err) {
-     if (err)//....
-     console.log('Done');
-     });
-
-     });
-     */
 // view engine setup
     app.set('views', path.join(__dirname, 'views'));
     app.set('view engine', 'ejs');
