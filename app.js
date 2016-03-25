@@ -113,14 +113,14 @@ function foo (successCallback) {
 
   setInterval (function() {
     session.get({oid: [1, 3, 6, 1, 4, 1, 318, 1, 1, 1, 2, 3, 2, 0]}, function (err, varbinds) {
-      var vb;
+      var vb4;
       if (err) {
         console.log(err);
       } else {
-        vb = varbinds[0];
+        vb4 = varbinds[0];
        //console.log('The system Temperature is "' + vb.value + '"');
       }
-      successCallback(vb.value);
+      successCallback(vb4.value);
       session.close();
     });
   },1000);
