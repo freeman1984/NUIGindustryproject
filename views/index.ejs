@@ -65,7 +65,6 @@ return 380;//setting scale of max values within the domain of  graph chart
 xAxisGen = d3.svg.axis()
 .scale(xScale)
 .orient("bottom")
-//.ticks(salesDataToPlot.length - 1);
 
 yAxisGen = d3.svg.axis()
 .scale(yScale)
@@ -166,7 +165,7 @@ drawLineChart();
 
 <div class="text-center"><h3><abbr title="  The actual battery bus voltage, expressed in tenths of Volts.">
             Current live feed of Internal voltage of UPS device is displayed below </abbr> </h3></div>
-<div  linear-chart chart-data="salesData"></div>
+<div  linear-chart chart-data="Data"></div>
 
 
 
@@ -201,15 +200,15 @@ drawLineChart();
     <div class="text-center"><h3><abbr title=" The current internal UPS temperature expressed in
 tenths of degrees Celsius. Overheating of UPS devices are a fundamental
 concern in more hot climates"> Internal Temp of UPS displayed below </abbr></h3></div>
-    <div linear-chart chart-data="salesData2"></div>
+    <div linear-chart chart-data="Data2"></div>
 
 
     <h6></h6>
 
 
 <div class="text-center"><h3><abbr title="Periodic Read over the past 36 hours. Overheating of UPS devices are a fundamental
-concern in more hot environments">Periodic Internal Temp of UPS is: </abbr></h3></div>
-<div linear-chart chart-data="salesData3"></div>
+concern in more hot environments">last 24 hours Internal Temp of UPS is: </abbr></h3></div>
+<div linear-chart chart-data="Data3"></div>
     <h2 ng-repeat="x in users5"> {{x.temp}}</h2>
 
 </body>
